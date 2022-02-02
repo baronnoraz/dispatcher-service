@@ -1,6 +1,8 @@
 name: CD Pipeline
 on:
   push:
+    tags:
+      - 'v*'
     branches:
       - main
 
@@ -40,8 +42,8 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew bootBuildImage \
-            --imageName docker.io/polarbookshop/dispatcher-service:${{ env.APP_VERSION }} \
+            --imageName ghcr.io/baronnoraz/dispatcher-service:${{ env.APP_VERSION }} \
             --publishImage \
-            -PregistryUrl=docker.io \
-            -PregistryUsername=polarbookshop \
-            -PregistryToken=${{ secrets.REGISTRY_TOKEN }}
+            -PregistryUrl=ghcr.io \
+            -PregistryUsername=baronnoraz \
+            -PregistryToken=${{ secrets.GITHUB_TOKEN }}
